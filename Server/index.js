@@ -1,13 +1,12 @@
 const express = require('express');
-const dotenv = require("dotenv");
+const dotenv = require("dotenv").config();
 const app = express();
 const PORT = 8000;
 const cors = require('cors');
-const bodyPerser =require('body-parser');
 
 const Connection = require("./database/db");
 const bodyParser = require('body-parser');
-dotenv.config();
+
 
 app.use(express.json());
 app.use(cors()); //cors use
@@ -37,10 +36,9 @@ app.use('/api/deleteProvider',require('./routes/deleteProvider'));
 app.use("/api/updateUser", require("./routes/updateUser"));
 
 
-const username = process.env.DB_USERNAME;
-const password = process.env.DB_PASSWORD;
+// Connect to the database and start the server
 
-Connection(username, password)
+Connection()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server listening on port No ${PORT}`);
